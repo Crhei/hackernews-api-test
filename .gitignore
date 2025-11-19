@@ -1,0 +1,14 @@
+/output/
+output
+.idea/
+.cache/
+env/
+**/*.pyc
+**/__pycache__
+**/.DS_Store
+.mypy_cache
+.venv/
+venv/
+*.swp
+.python-version
+*.log*

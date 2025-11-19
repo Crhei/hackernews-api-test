@@ -1,0 +1,3 @@
+default: #public
+    url: https://hacker-news.firebaseio.com
+    detailed_logs: true
