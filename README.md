@@ -24,7 +24,7 @@ markers could be found in `pytest.ini` or by running `pytest --markers`
 Examples
  
 ``` 
-pytest -m 'hn_news' -n5 # run all test with marker in parallel
+pytest -m 'hacker_news' -n5 # run all test with marker in parallel
 pytest -k 'test_top_stories' # run single tests with name  
 ```
 

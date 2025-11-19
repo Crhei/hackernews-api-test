@@ -25,13 +25,6 @@ class BaseClient:
         self.retry_codes = [429] if not retry_codes else retry_codes
         self._session = None
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_type is not None:
-            logger.debug(f'Error on exit: "{exc_type}"')
-
     def update_headers(self, headers):
         """Update request headers with data provided from the test/client"""
         if headers:

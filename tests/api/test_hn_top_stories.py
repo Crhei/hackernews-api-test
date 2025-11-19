@@ -12,7 +12,7 @@ from core.logconfig import get_logger
 
 logger = get_logger(__name__)
 
-@pytest.mark.hn_news
+@pytest.mark.hacker_news
 class TestTopStories:
     def test_top_stories(self, hn_client):
         all_top_stories = hn_client.get_top_stories().json()
