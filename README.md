@@ -5,7 +5,7 @@
     brew install python@3.12
     ```
 
-2. Create a virtual environment. Navigate to project root directory and execute
+2. To create virtual environment navigate to project root directory and execute
     ```shell
     make install
     ```
