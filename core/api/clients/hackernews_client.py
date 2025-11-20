@@ -18,7 +18,7 @@ class HackerNewsClient(BaseClient):
             validate=validate,
         )
 
-    def get_item(self, item_id=None, validate: bool = True) -> ApiResponse:
+    def get_item(self, item_id: int, validate: bool = True) -> ApiResponse:
         return self.get(
             f"{self.url}/v0/item/{item_id}.json",
             code=200,

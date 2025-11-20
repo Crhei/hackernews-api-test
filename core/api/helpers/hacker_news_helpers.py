@@ -45,7 +45,7 @@ def get_first_story_comments(client, item_ids: list, comments: bool = True):
     raise RuntimeError(error_msg)
 
 
-def get_first_deleted_comment(client, comment_ids: list) -> dict:
+def get_first_deleted_comment(client, comment_ids: list):
     """
     Find the first deleted comment from a list of comment IDs.
 
