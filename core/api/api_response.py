@@ -1,10 +1,6 @@
 import json as j
-from typing import Generic, TypeVar
 
-T = TypeVar("T")
-
-
-class ApiResponse(Generic[T]):
+class ApiResponse:
     """API response wrapper"""
 
     def __init__(self, response, response_time=None):
