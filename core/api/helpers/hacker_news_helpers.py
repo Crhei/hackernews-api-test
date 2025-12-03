@@ -3,6 +3,13 @@ from core.logconfig import get_logger
 
 logger = get_logger(__name__)
 
+def top_stories(client, top_story: bool = False, random_story: bool = False):
+    all_top_stories = client.get_top_stories().json()
+    if top_story:
+        return all_top_stories[0]
+    if random_story:
+        return random.choice(all_top_stories)
+    return all_top_stories
 
 def get_first_story_comments(client, item_ids: list, comments: bool = True):
     """

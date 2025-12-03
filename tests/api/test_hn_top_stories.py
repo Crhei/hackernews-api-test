@@ -5,7 +5,10 @@ from core.api.helpers.hacker_news_helpers import (
     assert_item_comment_response,
     get_first_story_comments,
     get_first_deleted_comment,
+    top_stories
+
 )
+
 from core.logconfig import get_logger
 
 
@@ -15,20 +18,19 @@ logger = get_logger(__name__)
 @pytest.mark.hacker_news
 class TestTopStories:
     def test_top_stories(self, hn_client):
-        all_top_stories = hn_client.get_top_stories().json()
-        assert_top_stories_response(all_top_stories)
+        assert_top_stories_response(top_stories(hn_client))
 
     def test_current_top_story(self, hn_client):
-        all_top_stories = hn_client.get_top_stories().json()
-        assert len(all_top_stories) > 0, "top stories response is empty"
-        first_top_story = hn_client.get_item(item_id=all_top_stories[0]).json()
+        first_top_story = top_stories(hn_client, top_story=True)
+        first_top_story = hn_client.get_item(item_id=first_top_story).json()
+        assert first_top_story['type'] == 'story', 'not type story'
         assert_item_top_story_response(first_top_story)
 
     def test_current_top_story_first_comment(self, hn_client):
-        all_top_stories = hn_client.get_top_stories().json()
-        assert len(all_top_stories) > 0, "top stories response is empty"
+        all_top_stories = top_stories(hn_client)
         story_with_comments = get_first_story_comments(client=hn_client, item_ids=all_top_stories)
         first_comment = hn_client.get_item(item_id=story_with_comments['kids'][0]).json()
+        assert first_comment['type'] == 'comment', 'not type comment'
         assert_item_comment_response(first_comment)
 
 # Had to timebox edge cases, would spend more time otherwise.
@@ -37,7 +39,7 @@ class TestTopStories:
         Test handling of deleted top-level comments.
         Validates that deleted comments have correct structure even when optional fields are missing.
         """
-        all_top_stories = hn_client.get_top_stories().json()
+        all_top_stories = top_stories(hn_client)
         assert len(all_top_stories) > 0, "top stories response is empty"
         story_with_comments = get_first_story_comments(client=hn_client, item_ids=all_top_stories)
         deleted_comment = get_first_deleted_comment(client=hn_client, comment_ids=story_with_comments['kids'])
@@ -50,7 +52,7 @@ class TestTopStories:
         assert deleted_comment.get('deleted') is True, "Comment should have deleted=True"
 
     def test_top_story_with_no_comments(self, hn_client):
-        all_top_stories = hn_client.get_top_stories().json()
+        all_top_stories = top_stories(hn_client)
         no_comments_story = get_first_story_comments(client=hn_client, item_ids=all_top_stories, comments=False)
         for filed in no_comments_story:
             assert filed != "kids", "story has comments"
